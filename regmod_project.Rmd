@@ -1,0 +1,81 @@
+---
+title: "Regression Models Course Project"
+author: "By: Misal6"
+date: "January, 2015"
+output: html_document
+---
+  
+**Executive Summary**  
+The focus of this analysis is the effect of car transmission on miles per gallon (from mtcars dataset). Both the requirements relate to this measurement. First to determine this relationship and second to quantify it. The approach I have taken to address thses can be summarized as follows.  
+
+**Meaningfulness of Results (questions of interest)**  
+
+1. Theoretical importance of measuring transmissions relation to mpg. Yes there is a relationship as demonstrated by the R-Squared values.  
+2. The statistical Effect size of this measure is the difference between the means of mpg determined by transmission type.   
+3. Can we rule OUT random chance? No, because of significant p-value  
+4. Can we rule out alternative explainations(LURKING variables). No, there is a stronger relationship on mpg in the data set relative of other variables as demonstrated by correlations in appendix section.  
+  
+**Read in the data**
+```{r}
+mydata <- mtcars
+mydata$am <- as.factor(mydata$am)
+levels(mydata$am)[1] <- "Automatic"
+levels(mydata$am)[2] <- "Manual"
+```
+**Exploratory data analysis**
+```{r}
+summary(mydata$mpg)
+```
+**Means by transmission type.**  
+```{r}
+aggregate(mpg~am, data = mydata, mean)
+```
+
+--------------  
+
+**Hypothesis Testing**  
+Null hypothesis "There is no significant difference in mpg by transmission type of a car"
+
+```{r}
+am.manual <- mydata[mydata$am == "Manual",]
+am.auto <- mydata[mydata$am == "Automatic",]
+t.test(am.manual$mpg,am.auto$mpg)
+```
+Since p-value is less than .005 we reject null hypothesis. MPG is effected by transmission type of cars.  
+**To Quantify this effect, we fit a model with transmission as dependent variable**  
+
+```{r}
+fit.am <- lm(mpg ~ am, data=mydata)
+round(summary(fit.am)$r.squared,2)
+```
+Only 36% of variance in mpg can be explained by difference in transmission type. (quantifying the uncertanity)  
+There must be other variables effecting mpg more then transmission type. The correlation table indicates the top choices.  
+
+```{r}
+sort(round(cor(mtcars,mtcars$mpg)[-1,],2))
+```
+
+Taking the top correlated variables and getting the best fit model.(multiple models)  
+```{r}
+fit.best <-lm(mpg ~ am + wt + cyl + disp + hp, data=mydata)
+round(summary(fit.best)$r.squared,2)
+```
+These variables explain 85% variability on mpg, more than double of transmission type.  
+
+-----
+
+**Appendix A**  
+
+```{r}
+boxplot(mpg ~ am, data = mydata,col = "lightblue",main="Mean values boxplot")
+```
+-----
+
+**Appendix B**  
+
+**Residual plot for the best fit model. (of particular interest is the Q-Q normal plot)**  
+```{r echo=FALSE}
+summary(fit.best)
+par(mfrow=c(2, 2))
+plot(fit.best)
+```
