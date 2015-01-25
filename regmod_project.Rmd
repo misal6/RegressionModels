@@ -1,6 +1,6 @@
 ---
 title: "Regression Models Course Project"
-author: "By: Misal6"
+author: 'By: Misal6'
 date: "January, 2015"
 output: html_document
 ---
@@ -13,7 +13,7 @@ The focus of this analysis is the effect of car transmission on miles per gallon
 1. Theoretical importance of measuring transmissions relation to mpg. Yes there is a relationship as demonstrated by the R-Squared values.  
 2. The statistical Effect size of this measure is the difference between the means of mpg determined by transmission type.   
 3. Can we rule OUT random chance? No, because of significant p-value  
-4. Can we rule out alternative explainations(LURKING variables). No, there is a stronger relationship on mpg in the data set relative of other variables as demonstrated by correlations in appendix section.  
+4. Can we rule out alternative explainations(LURKING variables). No, there is a stronger relationship on mpg in the data set relative of other variables as demonstrated by correlations.  
   
 **Read in the data**
 ```{r}
@@ -60,7 +60,7 @@ Taking the top correlated variables and getting the best fit model.(multiple mod
 fit.best <-lm(mpg ~ am + wt + cyl + disp + hp, data=mydata)
 round(summary(fit.best)$r.squared,2)
 ```
-These variables explain 85% variability on mpg, more than double of transmission type.  
+These variables explain `r round(summary(fit.best)$r.squared,2)*100`% variability on mpg, more than double of transmission type, __and is the best model representing effect of different variables on miles per gallon measure of cars__.  
 
 -----
 

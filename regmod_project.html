@@ -64,7 +64,7 @@ if (window.hljs && document.readyState && document.readyState === "complete") {
 <li>Theoretical importance of measuring transmissions relation to mpg. Yes there is a relationship as demonstrated by the R-Squared values.<br /></li>
 <li>The statistical Effect size of this measure is the difference between the means of mpg determined by transmission type.<br /></li>
 <li>Can we rule OUT random chance? No, because of significant p-value<br /></li>
-<li>Can we rule out alternative explainations(LURKING variables). No, there is a stronger relationship on mpg in the data set relative of other variables as demonstrated by correlations in appendix section.</li>
+<li>Can we rule out alternative explainations(LURKING variables). No, there is a stronger relationship on mpg in the data set relative of other variables as demonstrated by correlations.</li>
 </ol>
 <p><strong>Read in the data</strong></p>
 <pre class="r"><code>mydata &lt;- mtcars
@@ -108,7 +108,7 @@ round(summary(fit.am)$r.squared,2)</code></pre>
 <pre class="r"><code>fit.best &lt;-lm(mpg ~ am + wt + cyl + disp + hp, data=mydata)
 round(summary(fit.best)$r.squared,2)</code></pre>
 <pre><code>## [1] 0.86</code></pre>
-<p>These variables explain 85% variability on mpg, more than double of transmission type.</p>
+<p>These variables explain 86% variability on mpg, more than double of transmission type, <strong>and is the best model representing effect of different variables on miles per gallon measure of cars</strong>.</p>
 <hr />
 <p><strong>Appendix A</strong></p>
 <pre class="r"><code>boxplot(mpg ~ am, data = mydata,col = &quot;lightblue&quot;,main=&quot;Mean values boxplot&quot;)</code></pre>
